@@ -15,16 +15,31 @@ let board = [] // array of rows, each row is array of cells  (board[y][x])
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
 
-function makeBoard() {
+function makeBoard(width, height) {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
+  let tempBoard = []
+  for (let i = 0; i < width; i++) {
+    let row = []
+    for (let k = 0; k < height; k++) {
+      row.push(null)
+    }
+    tempBoard.push(row)
+  }
+  board = tempBoard
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 function makeHtmlBoard() {
   // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
+  const htmlBoard = document.querySelector('#board')
 
   // TODO: add comment for this code
+  /**
+   * Adds a click listener to a dynamicallty created
+   * table row with an id of column-top
+   */
+
   const top = document.createElement('tr')
   top.setAttribute('id', 'column-top')
   top.addEventListener('click', handleClick)
@@ -37,6 +52,11 @@ function makeHtmlBoard() {
   htmlBoard.append(top)
 
   // TODO: add comment for this code
+  /**
+   * Dynamically creates y number of rows and creates x number of cells
+   * to be created and appended to the htmlBoard each with an id that's a
+   * combination of the y-x index values
+   */
   for (let y = 0; y < HEIGHT; y++) {
     const row = document.createElement('tr')
     for (let x = 0; x < WIDTH; x++) {
@@ -149,5 +169,5 @@ function checkForWin() {
   }
 }
 
-makeBoard()
+makeBoard(WIDTH, HEIGHT)
 makeHtmlBoard()
