@@ -102,17 +102,15 @@ function endGame(msg) {
 function handleClick(evt) {
   // get x from ID of clicked cell
   const x = +evt.target.id
-  console.log('x: ', x)
   // get next spot in column (if none, ignore click)
   const y = findSpotForCol(x)
-  console.log('y: ', y)
   if (y === null) {
     return
   }
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
-  board[y][x] = `Player${currPlayer}`
+  board[y][x] = currPlayer
   placeInTable(y, x)
 
   // check for win
