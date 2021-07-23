@@ -16,7 +16,6 @@ let board = [] // array of rows, each row is array of cells  (board[y][x])
  */
 
 function makeBoard() {
-  // TODO: set "board" to empty HEIGHT x WIDTH matrix array
   for (let i = 0; i < HEIGHT; i++) {
     let row = []
     for (let k = 0; k < WIDTH; k++) {
@@ -70,8 +69,6 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 0
-
   for (let i = board.length - 1; i >= 0; i--) {
     if (board[i][x] === undefined) {
       return i
@@ -82,7 +79,6 @@ function findSpotForCol(x) {
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 function placeInTable(y, x) {
-  // TODO: make a div and insert into correct table cell
   const gamePiece = document.createElement('div')
   gamePiece.classList.add(`p-${currPlayer}`)
   gamePiece.classList.add('piece')
@@ -109,7 +105,6 @@ function handleClick(evt) {
   }
 
   // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
   board[y][x] = currPlayer
   placeInTable(y, x)
 
@@ -119,19 +114,16 @@ function handleClick(evt) {
   }
 
   // check for tie
-  // TODO: check if all cells in board are filled; if so call, call endGame
   const tie = board.every((cell) => cell.every((val) => val !== undefined))
   if (tie) {
     return endGame(`It's a tie -_-`)
   }
 
   // switch players
-  // TODO: switch currPlayer 1 <-> 2
   currPlayer === 1 ? (currPlayer = 2) : (currPlayer = 1)
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
-
 function checkForWin() {
   function _win(cells) {
     // Check four cells to see if they're all color of current player
@@ -148,35 +140,40 @@ function checkForWin() {
     )
   }
 
-  // TODO: read and understand this code. Add comments to help you.
-
+  // This loops through each row of the board
   for (let y = 0; y < HEIGHT; y++) {
+    // This loops through each cell in the current row
     for (let x = 0; x < WIDTH; x++) {
+      // This determines a win horizontally
       let horiz = [
         [y, x],
         [y, x + 1],
         [y, x + 2],
         [y, x + 3],
       ]
+      // This determines a win vertically
       let vert = [
         [y, x],
         [y + 1, x],
         [y + 2, x],
         [y + 3, x],
       ]
+      // This determines a win diagonally to the right
       let diagDR = [
         [y, x],
         [y + 1, x + 1],
         [y + 2, x + 2],
         [y + 3, x + 3],
       ]
+      // This determines a win diagonally to the left
       let diagDL = [
         [y, x],
         [y + 1, x - 1],
         [y + 2, x - 2],
         [y + 3, x - 3],
       ]
-
+      // This checks each 4 possible directions for a win and
+      // if any are true, it returns true that there's a winner
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true
       }
