@@ -15,35 +15,35 @@ let board = [] // array of rows, each row is array of cells  (board[y][x])
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
 
-function makeBoard(width, height) {
+function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
-  let tempBoard = []
-  for (let i = 0; i < width; i++) {
+  for (let i = 0; i < HEIGHT; i++) {
     let row = []
-    for (let k = 0; k < height; k++) {
+    for (let k = 0; k < WIDTH; k++) {
       row.push(null)
     }
-    tempBoard.push(row)
+    board.push(row)
   }
-  board = tempBoard
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 function makeHtmlBoard() {
-  // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
   const htmlBoard = document.querySelector('#board')
 
-  // TODO: add comment for this code
   /**
-   * Adds a click listener to a dynamicallty created
-   * table row with an id of column-top
+   * Dynamically creates the table rows with a
+   * click listener, and sets an id of column-top.
    */
-
   const top = document.createElement('tr')
   top.setAttribute('id', 'column-top')
   top.addEventListener('click', handleClick)
 
+  /**
+   * Loops through the top row then creates and appends
+   * the top row's cells which'll be used to select/highlight
+   * which column to drop a game piece
+   */
   for (let x = 0; x < WIDTH; x++) {
     const headCell = document.createElement('td')
     headCell.setAttribute('id', x)
@@ -51,7 +51,6 @@ function makeHtmlBoard() {
   }
   htmlBoard.append(top)
 
-  // TODO: add comment for this code
   /**
    * Dynamically creates y number of rows and creates x number of cells
    * to be created and appended to the htmlBoard each with an id that's a
@@ -76,9 +75,15 @@ function findSpotForCol(x) {
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
-
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
+  const gamePiece = document.createElement('div')
+  gamePiece.classList.add(`p-${currPlayer}`)
+  gamePiece.classList.add('piece')
+
+  const td = document.getElementById(`${y}-${x}`)
+  console.log(td)
+  td.append(gamePiece)
 }
 
 /** endGame: announce game end */
@@ -169,5 +174,5 @@ function checkForWin() {
   }
 }
 
-makeBoard(WIDTH, HEIGHT)
+makeBoard()
 makeHtmlBoard()
