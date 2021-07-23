@@ -82,14 +82,13 @@ function placeInTable(y, x) {
   gamePiece.classList.add('piece')
 
   const td = document.getElementById(`${y}-${x}`)
-  console.log(td)
   td.append(gamePiece)
 }
 
 /** endGame: announce game end */
 
 function endGame(msg) {
-  // TODO: pop up alert message
+  alert(msg)
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -106,6 +105,7 @@ function handleClick(evt) {
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
+  board[y][x] = `Player${currPlayer}`
   placeInTable(y, x)
 
   // check for win
@@ -115,9 +115,14 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
+  const tie = board.every((cell) => cell.every((val) => val !== null))
+  if (tie) {
+    return endGame(`It's a tie -_-`)
+  }
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  currPlayer === 1 ? (currPlayer = 2) : (currPlayer = 1)
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
