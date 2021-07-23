@@ -20,7 +20,7 @@ function makeBoard() {
   for (let i = 0; i < HEIGHT; i++) {
     let row = []
     for (let k = 0; k < WIDTH; k++) {
-      row.push(null)
+      row.push(undefined)
     }
     board.push(row)
   }
@@ -71,7 +71,13 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
-  return 0
+
+  for (let i = board.length - 1; i >= 0; i--) {
+    if (board[i][x] === undefined) {
+      return i
+    }
+  }
+  return null
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -96,7 +102,6 @@ function endGame(msg) {
 function handleClick(evt) {
   // get x from ID of clicked cell
   const x = +evt.target.id
-
   // get next spot in column (if none, ignore click)
   const y = findSpotForCol(x)
   if (y === null) {
@@ -105,7 +110,7 @@ function handleClick(evt) {
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
-  board[y][x] = `Player${currPlayer}`
+  board[y][x] = currPlayer
   placeInTable(y, x)
 
   // check for win
@@ -115,7 +120,7 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-  const tie = board.every((cell) => cell.every((val) => val !== null))
+  const tie = board.every((cell) => cell.every((val) => val !== undefined))
   if (tie) {
     return endGame(`It's a tie -_-`)
   }
